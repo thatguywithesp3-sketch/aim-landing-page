@@ -252,7 +252,7 @@ function Home() {
 
             {/* Стати з анімаціями */}
             <Box sx={{ 
-              mt: 12.5, // 100px відстань від CTA (в два рази більше)
+              mt: 18, // 144px відстань від CTA (збільшено)
             }}>
               <Grid container spacing={4} justifyContent="center">
                 {stats.map((stat, index) => (
@@ -265,6 +265,7 @@ function Home() {
                           fontWeight: 700, 
                           color: '#FF3737', 
                           mb: 1,
+                          fontSize: '60%', // Зменшено на 40% (100% - 40% = 60%)
                           animation: showStats ? 'blurIn 1.5s ease-out forwards' : 'none',
                           animationDelay: `${0.8 + index * 0.2}s`,
                           filter: showStats ? 'blur(0px)' : 'blur(20px)',
@@ -289,6 +290,7 @@ function Home() {
                         sx={{ 
                           color: 'rgba(255, 255, 255, 0.6)',
                           minHeight: '30px',
+                          fontSize: '60%', // Зменшено на 40% (100% - 40% = 60%)
                           '&::after': {
                             content: displayedStats[index]?.label && displayedStats[index].label.length < stat.label.length ? '"|"' : '""',
                             animation: 'blink 1s infinite',
@@ -337,37 +339,88 @@ function Home() {
             </Typography>
           </Box>
 
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {features.map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card 
-                  sx={{ 
-                    height: '100%',
+              <Card 
+                key={index}
+                sx={{ 
+                  width: '100%',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  backdropFilter: 'blur(10px)',
+                  border: 'none',
+                  borderTop: index > 0 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                  borderRadius: 0,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(255, 55, 55, 0.05) 0%, rgba(255, 55, 55, 0.02) 50%, rgba(255, 55, 55, 0.05) 100%)',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                    zIndex: 0,
+                  },
+                  '&:hover': {
                     background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      border: '1px solid rgba(255, 55, 55, 0.5)',
-                    }
-                  }}
-                >
-                  <CardContent sx={{ p: 4 }}>
-                    <Box sx={{ color: '#FF3737', mb: 2 }}>
+                    '&::before': {
+                      opacity: 1,
+                    },
+                    '& .feature-description': {
+                      maxHeight: '100px',
+                      opacity: 1,
+                      transform: 'translateY(0)',
+                    },
+                  }
+                }}
+              >
+                <CardContent sx={{ p: 4, position: 'relative', zIndex: 1 }}>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 3,
+                    flexWrap: { xs: 'wrap', md: 'nowrap' },
+                  }}>
+                    <Box sx={{ color: '#FF3737', flexShrink: 0 }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 600, mb: 2, color: 'white' }}>
-                      {feature.title}
-                    </Typography>
-                    <Typography sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                      {feature.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography 
+                        variant="h5" 
+                        sx={{ 
+                          fontWeight: 600, 
+                          mb: 0,
+                          color: 'white',
+                          fontFamily: '"Futura", "Montserrat", "Arial", sans-serif',
+                        }}
+                      >
+                        {feature.title}
+                      </Typography>
+                      <Typography 
+                        className="feature-description"
+                        sx={{ 
+                          color: 'rgba(255, 255, 255, 0.6)',
+                          mt: 1,
+                          maxHeight: 0,
+                          opacity: 0,
+                          overflow: 'hidden',
+                          transform: 'translateY(-10px)',
+                          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                          fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+                        }}
+                      >
+                        {feature.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 
