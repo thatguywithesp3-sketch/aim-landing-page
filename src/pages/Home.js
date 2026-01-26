@@ -12,32 +12,38 @@ function Home() {
     {
       icon: <RocketLaunchIcon sx={{ fontSize: 40 }} />,
       title: 'Lightning Fast',
-      description: 'Built for speed and performance. Deploy in seconds and scale instantly.'
+      description: 'Built for speed and performance. Deploy in seconds and scale instantly.',
+      backgroundImage: 'lightning-fast-bg.jpg', // Додайте цю картинку в public/Images/
     },
     {
       icon: <SecurityIcon sx={{ fontSize: 40 }} />,
       title: 'Enterprise Security',
-      description: 'Bank-level security with end-to-end encryption and compliance certifications.'
+      description: 'Bank-level security with end-to-end encryption and compliance certifications.',
+      backgroundImage: 'enterprise-security-bg.jpg', // Додайте цю картинку в public/Images/
     },
     {
       icon: <CodeIcon sx={{ fontSize: 40 }} />,
       title: 'Developer First',
-      description: 'Powerful APIs and SDKs that developers love. Build anything you can imagine.'
+      description: 'Powerful APIs and SDKs that developers love. Build anything you can imagine.',
+      backgroundImage: 'developer-first-bg.jpg', // Додайте цю картинку в public/Images/
     },
     {
       icon: <CloudIcon sx={{ fontSize: 40 }} />,
       title: 'Cloud Native',
-      description: 'Fully managed infrastructure that scales automatically with your needs.'
+      description: 'Fully managed infrastructure that scales automatically with your needs.',
+      backgroundImage: 'cloud-native-bg.jpg', // Додайте цю картинку в public/Images/
     },
     {
       icon: <SpeedIcon sx={{ fontSize: 40 }} />,
       title: 'Real-time Analytics',
-      description: 'Monitor everything in real-time with powerful dashboards and insights.'
+      description: 'Monitor everything in real-time with powerful dashboards and insights.',
+      backgroundImage: 'analytics-bg.jpg', // Додайте цю картинку в public/Images/
     },
     {
       icon: <AutoAwesomeIcon sx={{ fontSize: 40 }} />,
       title: 'AI Powered',
-      description: 'Leverage cutting-edge AI to automate workflows and boost productivity.'
+      description: 'Leverage cutting-edge AI to automate workflows and boost productivity.',
+      backgroundImage: 'ai-powered-bg.jpg', // Додайте цю картинку в public/Images/
     },
   ];
 
@@ -313,7 +319,7 @@ function Home() {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 12 }}>
+      <Box sx={{ py: 12, position: 'relative', overflow: 'hidden' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Typography 
@@ -339,7 +345,7 @@ function Home() {
             </Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
             {features.map((feature, index) => (
               <Card 
                 key={index}
@@ -351,8 +357,9 @@ function Home() {
                   borderTop: index > 0 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
                   borderRadius: 0,
                   position: 'relative',
-                  overflow: 'hidden',
+                  overflow: 'visible',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  zIndex: 1,
                   '&::before': {
                     content: '""',
                     position: 'absolute',
@@ -360,42 +367,92 @@ function Home() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(255, 55, 55, 0.05) 0%, rgba(255, 55, 55, 0.02) 50%, rgba(255, 55, 55, 0.05) 100%)',
+                    backgroundImage: feature.backgroundImage 
+                      ? `url(${process.env.PUBLIC_URL}/Images/${feature.backgroundImage})`
+                      : 'none',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
                     opacity: 0,
                     transition: 'opacity 0.4s ease',
                     zIndex: 0,
                   },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.6)',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                    zIndex: 1,
+                  },
                   '&:hover': {
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '100vw',
+                    maxWidth: '100vw',
+                    zIndex: 10,
                     background: 'rgba(255, 255, 255, 0.05)',
+                    borderTop: '2px solid',
+                    borderBottom: '2px solid',
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    borderImage: 'linear-gradient(90deg, rgba(255, 55, 55, 0.3) 0%, rgba(255, 55, 55, 0.8) 50%, rgba(255, 55, 55, 0.3) 100%) 1',
                     '&::before': {
                       opacity: 1,
+                    },
+                    '&::after': {
+                      opacity: 1,
+                    },
+                    '& .feature-icon': {
+                      color: '#FF3737',
+                      filter: 'drop-shadow(0 0 15px rgba(255, 55, 55, 0.9))',
+                      transform: 'scale(1.15)',
+                    },
+                    '& .feature-title': {
+                      color: '#FF3737',
+                      textShadow: '0 0 15px rgba(255, 55, 55, 0.6), 0 0 30px rgba(255, 55, 55, 0.4)',
                     },
                     '& .feature-description': {
                       maxHeight: '100px',
                       opacity: 1,
                       transform: 'translateY(0)',
+                      color: 'rgba(255, 255, 255, 0.9)',
                     },
                   }
                 }}
               >
-                <CardContent sx={{ p: 4, position: 'relative', zIndex: 1 }}>
+                <CardContent sx={{ p: 4, position: 'relative', zIndex: 2 }}>
                   <Box sx={{ 
                     display: 'flex', 
                     alignItems: 'center', 
                     gap: 3,
                     flexWrap: { xs: 'wrap', md: 'nowrap' },
                   }}>
-                    <Box sx={{ color: '#FF3737', flexShrink: 0 }}>
+                    <Box 
+                      className="feature-icon"
+                      sx={{ 
+                        color: '#FF3737', 
+                        flexShrink: 0,
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    >
                       {feature.icon}
                     </Box>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                       <Typography 
+                        className="feature-title"
                         variant="h5" 
                         sx={{ 
                           fontWeight: 600, 
                           mb: 0,
                           color: 'white',
                           fontFamily: '"Futura", "Montserrat", "Arial", sans-serif',
+                          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                         }}
                       >
                         {feature.title}
