@@ -41,9 +41,21 @@ function Home() {
     },
   ];
 
+  const stats = [
+    { value: '10M+', label: 'Active Users' },
+    { value: '99.9%', label: 'Uptime SLA' },
+    { value: '150+', label: 'Countries' },
+  ];
+
   const [displayedText, setDisplayedText] = useState('');
   const fullText = 'The modern platform for building and scaling your next big idea';
   const [showButtons, setShowButtons] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const [displayedStats, setDisplayedStats] = useState([
+    { value: '', label: '' },
+    { value: '', label: '' },
+    { value: '', label: '' },
+  ]);
   const heroRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
   const contentRef = useRef(null);
@@ -59,6 +71,30 @@ function Home() {
         clearInterval(typingInterval);
         setTimeout(() => {
           setShowButtons(true);
+          // Після появи кнопок, починаємо анімацію статів
+          setTimeout(() => {
+            setShowStats(true);
+            // Typing effect для назв статів
+            stats.forEach((stat, index) => {
+              let labelIndex = 0;
+              const labelInterval = setInterval(() => {
+                if (labelIndex < stat.label.length) {
+                  setDisplayedStats(prev => {
+                    const newStats = [...prev];
+                    newStats[index] = {
+                      ...newStats[index],
+                      value: stat.value,
+                      label: stat.label.slice(0, labelIndex + 1)
+                    };
+                    return newStats;
+                  });
+                  labelIndex++;
+                } else {
+                  clearInterval(labelInterval);
+                }
+              }, 50 * (index + 1)); // Затримка для кожного стату
+            });
+          }, 500);
         }, 300);
       }
     }, 50);
@@ -101,16 +137,24 @@ function Home() {
           }
         }}
       >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, height: '100vh', display: 'flex', alignItems: 'center' }}>
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            position: 'relative', 
+            zIndex: 1, 
+            minHeight: '100vh', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            py: 10, // Padding зверху та знизу, щоб контент не обрізався
+            pt: 12, // Більший padding зверху для хедера
+          }}
+        >
           <Box 
             ref={contentRef}
             sx={{ 
-              position: 'sticky',
-              top: '50%',
-              transform: 'translateY(-50%)',
               textAlign: 'center',
               width: '100%',
-              py: 4,
             }}
           >
             {/* Заголовок з blur анімацією */}
@@ -170,6 +214,7 @@ function Home() {
               justifyContent: 'center', 
               flexWrap: 'wrap',
               overflow: 'hidden',
+              mb: 6.25, // 50px відстань до статів
             }}>
               <Button 
                 variant="contained" 
@@ -204,45 +249,64 @@ function Home() {
                 Learn More
               </Button>
             </Box>
-          </Box>
-        </Container>
-      </Box>
 
-      {/* Stats Section */}
-      <Box sx={{ py: 8, background: '#0f0f0f' }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h2" sx={{ fontWeight: 700, color: '#FF3737', mb: 1 }}>
-                  10M+
-                </Typography>
-                <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Active Users
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h2" sx={{ fontWeight: 700, color: '#FF3737', mb: 1 }}>
-                  99.9%
-                </Typography>
-                <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Uptime SLA
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h2" sx={{ fontWeight: 700, color: '#FF3737', mb: 1 }}>
-                  150+
-                </Typography>
-                <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Countries
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
+            {/* Стати з анімаціями */}
+            <Box sx={{ 
+              mt: 12.5, // 100px відстань від CTA (в два рази більше)
+            }}>
+              <Grid container spacing={4} justifyContent="center">
+                {stats.map((stat, index) => (
+                  <Grid item xs={12} sm={4} md={4} key={index}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      {/* Числовий показник з blur анімацією */}
+                      <Typography 
+                        variant="h2" 
+                        sx={{ 
+                          fontWeight: 700, 
+                          color: '#FF3737', 
+                          mb: 1,
+                          animation: showStats ? 'blurIn 1.5s ease-out forwards' : 'none',
+                          animationDelay: `${0.8 + index * 0.2}s`,
+                          filter: showStats ? 'blur(0px)' : 'blur(20px)',
+                          opacity: showStats ? 1 : 0,
+                          '@keyframes blurIn': {
+                            '0%': {
+                              filter: 'blur(20px)',
+                              opacity: 0,
+                            },
+                            '100%': {
+                              filter: 'blur(0px)',
+                              opacity: 1,
+                            },
+                          },
+                        }}
+                      >
+                        {displayedStats[index]?.value || stat.value}
+                      </Typography>
+                      {/* Назва стату з typing ефектом */}
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          color: 'rgba(255, 255, 255, 0.6)',
+                          minHeight: '30px',
+                          '&::after': {
+                            content: displayedStats[index]?.label && displayedStats[index].label.length < stat.label.length ? '"|"' : '""',
+                            animation: 'blink 1s infinite',
+                            '@keyframes blink': {
+                              '0%, 50%': { opacity: 1 },
+                              '51%, 100%': { opacity: 0 },
+                            },
+                          },
+                        }}
+                      >
+                        {displayedStats[index]?.label || ''}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Box>
         </Container>
       </Box>
 

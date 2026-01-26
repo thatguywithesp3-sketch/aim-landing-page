@@ -114,7 +114,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Router>
+      <Router basename="/aim-landing-page">
         <Box sx={{ minHeight: '100vh', background: '#0a0a0a' }}>
           {/* Navigation Bar */}
           <AppBar 
