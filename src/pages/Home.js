@@ -83,12 +83,12 @@ function Home() {
         ref={heroRef}
         sx={{
           minHeight: '900px',
-          backgroundImage: 'url(/images/hero-background.jpg)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/Images/hero-background.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: `center ${scrollY * 0.45}px`,
           backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
           position: 'relative',
+          overflow: 'hidden',
           '&::before': {
             content: '""',
             position: 'absolute',
