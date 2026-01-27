@@ -5,6 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useState, useEffect } from 'react';
+import Lenis from 'lenis';
 
 // Import our page components
 import Home from './pages/Home';
@@ -87,6 +88,27 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.8,
+      touchMultiplier: 2,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   const navLinks = [
     { name: 'Features', path: '/features' },
     { name: 'Pricing', path: '/pricing' },
@@ -118,7 +140,7 @@ function App() {
         <Box sx={{ minHeight: '100vh', background: '#0a0a0a' }}>
           {/* Navigation Bar */}
           <AppBar 
-            position="sticky" 
+            position="fixed" 
             sx={{ 
               background: isScrolled 
                 ? 'linear-gradient(to bottom, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.8) 70%, rgba(255, 55, 55, 0.15) 100%)'
@@ -126,12 +148,13 @@ function App() {
               backdropFilter: 'blur(10px)',
               boxShadow: '0 1px 0 rgba(255, 255, 255, 0.1)',
               top: isScrolled ? '12px' : 0,
+              left: 0,
+              right: 0,
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               maxWidth: isScrolled ? '50%' : '100%',
-              mx: isScrolled ? 'auto' : 0,
+              mx: 'auto',
               borderRadius: isScrolled ? '20px' : 0,
               px: isScrolled ? '10px' : 0,
-              position: 'sticky',
               zIndex: 1100,
               '&::before': isScrolled ? {
                 content: '""',
@@ -238,101 +261,6 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/docs" element={<Docs />} />
           </Routes>
-
-          {/* Footer */}
-          <Box sx={{ 
-            background: '#050505',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-            py: 8,
-          }}>
-            <Container maxWidth="lg">
-              <Grid container spacing={4}>
-                {/* Company Info */}
-                <Grid item xs={12} md={4}>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ 
-                      fontWeight: 700,
-                      background: 'linear-gradient(135deg, #fff 0%, #FF3737 100%)',
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      mb: 2,
-                    }}
-                  >
-                    AIM.io
-                  </Typography>
-                  <Typography sx={{ color: 'rgba(255, 255, 255, 0.6)', mb: 3 }}>
-                    Building the future of web development, one line of code at a time.
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 2 }}>
-                    <Box sx={{ 
-                      color: 'rgba(255, 255, 255, 0.6)', 
-                      cursor: 'pointer',
-                      transition: 'color 0.2s',
-                      '&:hover': { color: '#FF3737' }
-                    }}>
-                      <TwitterIcon />
-                    </Box>
-                    <Box sx={{ 
-                      color: 'rgba(255, 255, 255, 0.6)', 
-                      cursor: 'pointer',
-                      transition: 'color 0.2s',
-                      '&:hover': { color: '#FF3737' }
-                    }}>
-                      <GitHubIcon />
-                    </Box>
-                    <Box sx={{ 
-                      color: 'rgba(255, 255, 255, 0.6)', 
-                      cursor: 'pointer',
-                      transition: 'color 0.2s',
-                      '&:hover': { color: '#FF3737' }
-                    }}>
-                      <LinkedInIcon />
-                    </Box>
-                  </Box>
-                </Grid>
-
-                {/* Footer Links */}
-                {footerSections.map((section) => (
-                  <Grid item xs={6} md={2} key={section.title}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: 'white' }}>
-                      {section.title}
-                    </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                      {section.links.map((link) => (
-                        <Typography
-                          key={link}
-                          sx={{
-                            color: 'rgba(255, 255, 255, 0.6)',
-                            cursor: 'pointer',
-                            transition: 'color 0.2s',
-                            '&:hover': {
-                              color: 'white',
-                            }
-                          }}
-                        >
-                          {link}
-                        </Typography>
-                      ))}
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-
-              {/* Copyright */}
-              <Box sx={{ 
-                mt: 8, 
-                pt: 4, 
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                textAlign: 'center'
-              }}>
-                <Typography sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                  © 2025 AIM.io. All rights reserved.
-                </Typography>
-              </Box>
-            </Container>
-          </Box>
         </Box>
       </Router>
     </ThemeProvider>
