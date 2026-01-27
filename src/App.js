@@ -1,9 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Button, Box, Typography, Container, AppBar, Toolbar, Grid } from '@mui/material';
+import { Button, Box, Typography, Container, AppBar, Toolbar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 
@@ -113,25 +110,6 @@ function App() {
     { name: 'Features', path: '/features' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'Docs', path: '/docs' },
-  ];
-
-  const footerSections = [
-    {
-      title: 'Product',
-      links: ['Features', 'Pricing', 'Security', 'Roadmap']
-    },
-    {
-      title: 'Company',
-      links: ['About', 'Blog', 'Careers', 'Press']
-    },
-    {
-      title: 'Resources',
-      links: ['Documentation', 'API Reference', 'Community', 'Support']
-    },
-    {
-      title: 'Legal',
-      links: ['Privacy', 'Terms', 'Cookie Policy', 'Licenses']
-    }
   ];
 
   return (
