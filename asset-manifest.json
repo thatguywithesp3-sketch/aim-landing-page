@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/aim-landing-page/static/css/main.17faa096.css",
-    "main.js": "/aim-landing-page/static/js/main.7a304998.js",
+    "main.js": "/aim-landing-page/static/js/main.b7e829d4.js",
     "static/js/453.e57803b1.chunk.js": "/aim-landing-page/static/js/453.e57803b1.chunk.js",
     "index.html": "/aim-landing-page/index.html",
     "main.17faa096.css.map": "/aim-landing-page/static/css/main.17faa096.css.map",
-    "main.7a304998.js.map": "/aim-landing-page/static/js/main.7a304998.js.map",
+    "main.b7e829d4.js.map": "/aim-landing-page/static/js/main.b7e829d4.js.map",
     "453.e57803b1.chunk.js.map": "/aim-landing-page/static/js/453.e57803b1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.17faa096.css",
-    "static/js/main.7a304998.js"
+    "static/js/main.b7e829d4.js"
   ]
 }
