@@ -106,7 +106,7 @@ function Pricing() {
         pt: 20,
         pb: 15,
         position: 'relative',
-        backgroundImage: `url("${process.env.PUBLIC_URL}/Images/Pricing BG.jpg")`,
+        backgroundImage: `url("${process.env.PUBLIC_URL}/Images/pricing-bg.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundPositionY: `${scrollY * 0.15}px`,
@@ -240,30 +240,47 @@ function Pricing() {
                 '& > *': { position: 'relative', zIndex: 1 }
               }}
             >
-              {plan.popular && (
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, gap: 1.5, flexWrap: 'nowrap' }}>
                 <Typography 
+                  variant="h4" 
                   sx={{ 
-                    position: 'absolute', 
-                    top: 20, 
-                    right: 20, 
-                    backgroundColor: '#FF3737', 
+                    fontWeight: 700, 
                     color: 'white', 
-                    px: 2, 
-                    py: 0.5, 
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
                     fontFamily: '"Futura", sans-serif',
-                    textTransform: 'uppercase'
+                    fontSize: { xs: '1.5rem', md: '1.8rem' },
+                    whiteSpace: 'nowrap'
                   }}
                 >
-                  Save 25%
+                  {plan.name}
                 </Typography>
-              )}
-
-              <Typography variant="h4" sx={{ fontWeight: 700, color: 'white', mb: 1, fontFamily: '"Futura", sans-serif' }}>
-                {plan.name}
-              </Typography>
+                {plan.popular && (
+                  <Box 
+                    sx={{ 
+                      backgroundColor: '#FF3737', 
+                      color: 'white', 
+                      px: 1, 
+                      py: 0.2, 
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexShrink: 0
+                    }}
+                  >
+                    <Typography 
+                      sx={{ 
+                        fontSize: '0.6rem',
+                        fontWeight: 900,
+                        fontFamily: '"Futura", sans-serif',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        lineHeight: 1
+                      }}
+                    >
+                      Save 25%
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
               <Typography sx={{ color: 'rgba(255, 255, 255, 0.5)', mb: 4, fontFamily: '"Poppins", sans-serif', fontSize: '0.9rem', minHeight: '3em' }}>
                 {plan.description}
               </Typography>

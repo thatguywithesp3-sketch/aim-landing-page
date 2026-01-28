@@ -382,7 +382,7 @@ function Home() {
         ref={footerGroupRef}
         sx={{
           position: 'relative',
-          backgroundImage: `url("${process.env.PUBLIC_URL}/Images/footer background.jpg")`,
+          backgroundImage: `url("${process.env.PUBLIC_URL}/Images/footer-bg.jpg")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundPositionY: footerGroupRef.current 

@@ -118,7 +118,7 @@ function Features() {
         pt: 20,
         pb: 15,
         position: 'relative',
-        backgroundImage: `url("${process.env.PUBLIC_URL}/Images/Features BG.jpg")`,
+        backgroundImage: `url("${process.env.PUBLIC_URL}/Images/features-bg.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundPositionY: `${scrollY * 0.15}px`,
