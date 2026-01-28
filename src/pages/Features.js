@@ -263,7 +263,23 @@ function Features() {
               <Box className="feature-icon" sx={{ color: '#FF5555', mb: 3, display: 'flex', filter: 'drop-shadow(0 0 12px rgba(255, 55, 55, 0.4))', transition: 'all 0.4s ease' }}>
                 {feature.icon}
               </Box>
-              <Typography className="feature-title" variant="h5" sx={{ fontWeight: 700, color: 'white', mb: 2, fontFamily: '"Futura", sans-serif', transition: 'all 0.4s ease' }}>
+              <Typography 
+                className="feature-title" 
+                variant="h5" 
+                sx={{ 
+                  fontWeight: 700, 
+                  color: 'white', 
+                  mb: 2, 
+                  fontFamily: '"Futura", sans-serif', 
+                  transition: 'all 0.4s ease',
+                  minHeight: '2.6em', // Forces titles to take up 2 lines of space for alignment
+                  lineHeight: 1.3,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
                 {feature.title}
               </Typography>
               <Typography className="feature-description" sx={{ color: 'rgba(255, 255, 255, 0.5)', lineHeight: 1.7, fontFamily: '"Poppins", sans-serif', fontSize: '1rem', transition: 'all 0.4s ease' }}>
