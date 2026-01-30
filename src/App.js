@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Button, Box, Typography, Container, AppBar, Toolbar } from '@mui/material';
+import { Button, Box, Typography, Container, AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
@@ -74,6 +76,14 @@ const darkTheme = createTheme({
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setMobileMenuOpen(open);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,8 +138,8 @@ function App() {
               top: isScrolled ? '12px' : 0,
               left: 0,
               right: 0,
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              maxWidth: isScrolled ? '50%' : '100%',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              maxWidth: isScrolled ? { xs: '90%', md: '50%' } : '100%',
               mx: 'auto',
               borderRadius: isScrolled ? '20px' : 0,
               px: isScrolled ? '10px' : 0,
@@ -185,7 +195,7 @@ function App() {
                   </Typography>
                 </Link>
 
-                {/* Navigation Links */}
+                {/* Navigation Links (Desktop) */}
                 <Box sx={{ 
                   display: { xs: 'none', md: 'flex' }, 
                   gap: isScrolled ? 1.4 : 2.8, 
@@ -215,11 +225,25 @@ function App() {
                   ))}
                 </Box>
 
+                {/* Mobile Menu Button */}
+                <Box sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 1, justifyContent: 'flex-end', mr: 1 }}>
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={toggleMobileMenu(true)}
+                    sx={{ color: 'white' }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Box>
+
                 {/* Sign Up Button */}
                 <Button 
                   variant="contained" 
                   size="small"
                   sx={{ 
+                    display: { xs: 'none', sm: 'inline-flex' },
                     px: isScrolled ? 1.4 : 2.1, 
                     py: isScrolled ? 0.525 : 0.7,
                     fontSize: isScrolled ? '0.875rem' : '0.9375rem',
@@ -231,6 +255,70 @@ function App() {
               </Container>
             </Toolbar>
           </AppBar>
+
+          {/* Mobile Drawer */}
+          <Drawer
+            anchor="right"
+            open={mobileMenuOpen}
+            onClose={toggleMobileMenu(false)}
+            PaperProps={{
+              sx: {
+                width: '100%',
+                maxWidth: '300px',
+                backgroundColor: 'rgba(10, 10, 10, 0.95)',
+                backdropFilter: 'blur(20px)',
+                backgroundImage: 'none',
+                borderLeft: '1px solid rgba(255, 55, 55, 0.1)',
+                p: 2,
+              }
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 4 }}>
+              <IconButton onClick={toggleMobileMenu(false)} sx={{ color: 'white' }}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <List>
+              {navLinks.map((link) => (
+                <ListItem key={link.name} disablePadding sx={{ mb: 2 }}>
+                  <ListItemButton 
+                    component={Link} 
+                    to={link.path} 
+                    onClick={toggleMobileMenu(false)}
+                    sx={{ 
+                      borderRadius: '12px',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 55, 55, 0.05)',
+                        '& .MuiTypography-root': { color: '#FF3737' }
+                      }
+                    }}
+                  >
+                    <ListItemText 
+                      primary={link.name} 
+                      primaryTypographyProps={{ 
+                        sx: { 
+                          color: 'white', 
+                          fontSize: '1.2rem', 
+                          fontWeight: 600,
+                          fontFamily: '"Futura", sans-serif'
+                        } 
+                      }} 
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <ListItem disablePadding sx={{ mt: 4 }}>
+                <Button 
+                  variant="contained" 
+                  fullWidth 
+                  size="large"
+                  sx={{ py: 2, borderRadius: '12px' }}
+                >
+                  Sign Up Free
+                </Button>
+              </ListItem>
+            </List>
+          </Drawer>
 
           {/* Routes - This is where the pages will be displayed */}
           <Routes>

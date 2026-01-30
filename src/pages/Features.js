@@ -135,11 +135,11 @@ function Features() {
     >
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         {/* Page Header */}
-        <Box sx={{ textAlign: 'center', mb: 12 }}>
+        <Box sx={{ textAlign: 'center', mb: { xs: 8, md: 12 } }}>
           <Typography 
             variant="h1" 
             sx={{ 
-              fontSize: { xs: '3rem', md: '4.5rem' },
+              fontSize: { xs: '2.5rem', md: '4.5rem' },
               fontWeight: 700,
               mb: 3,
               background: 'linear-gradient(135deg, #fff 0%, #FF3737 100%)',

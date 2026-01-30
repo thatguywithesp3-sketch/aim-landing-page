@@ -202,7 +202,7 @@ function Home() {
       <Box
         ref={heroRef}
         sx={{
-          minHeight: '900px',
+          minHeight: { xs: '700px', md: '900px' },
           backgroundImage: `url(${process.env.PUBLIC_URL}/Images/hero-background.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: `center ${scrollY * 0.45}px`,
@@ -234,7 +234,7 @@ function Home() {
                 Learn More
               </Button>
             </Box>
-            <Box sx={{ mt: 18 }}>
+            <Box sx={{ mt: { xs: 8, md: 18 } }}>
               <Grid container spacing={4} justifyContent="center">
                 {stats.map((stat, index) => (
                   <Grid item xs={12} sm={4} key={index}>
@@ -442,7 +442,7 @@ function Home() {
           </Box>
 
           {/* Animated Dashed Divider */}
-          <Box sx={{ px: '100px' }}>
+          <Box sx={{ px: { xs: '20px', md: '100px' } }}>
             <Box 
               sx={{ 
                 width: isFooterVisible ? '100%' : '0%',
